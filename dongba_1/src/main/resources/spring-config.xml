@@ -25,8 +25,8 @@
        http://www.springframework.org/schema/context
       http://www.springframework.org/schema/context/spring-context-4.3.xsd">
 
-	<import resource="classpath:spring-controller"/>
-	<import resource="classpath:spring-repository"/>
-	<import resource="classpath:spring-service"/>
+	<import resource="classpath:spring-controller.xml"/>
+	<import resource="classpath:spring-repository.xml"/>
+	<import resource="classpath:spring-service.xml"/>
 
 </beans>

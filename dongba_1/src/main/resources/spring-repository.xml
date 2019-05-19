@@ -39,7 +39,10 @@
 		<property name="dataSource" ref = "dataSource"></property>
 		<property name="mapperLocations" value="classpath*:mapper/*Mapper.xml"></property>
 	</bean>
-
+	<bean id="daoScance" class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+		<property name="sqlSessionFactoryBeanName" value="sqlSessionFactory"></property>
+		<property name="basePackage" value="com.turtle.**.dao"></property>
+	</bean>
 </beans>
 
 
