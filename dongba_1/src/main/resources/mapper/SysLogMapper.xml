@@ -1,16 +1,51 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-  
-<mapper namespace="com.turtle.dao.SysLogDao">  
- 	
- 	<!-- 通过id来删除对应的日志信息 -->
-    <delete id="deleteObjects">
-        delete from sys_logs
-        where id in 
-        <foreach collection="ids" open="(" separator="," close=")" item="id">
-        	#{id}
-        </foreach>
-    </delete>
-    
+
+<mapper namespace="com.turtle.dao.SysLogDao">
+
+	<!-- 1===对通过用户名来模糊查询的逻辑提取出来 -->
+	<sql id="query_where_username">
+		<where>
+			<if test="username != null and username != ''">
+				username like concat("%",#{username},"%")
+			</if>
+		</where>
+	</sql>
+
+	<!-- 2===通过id来删除对应的日志信息 -->
+	<delete id="deleteObjects">
+		delete from sys_logs
+		where id in
+		<foreach collection="ids" open="(" separator="," close=")"
+			item="id">
+			#{id}
+		</foreach>
+	</delete>
+
+
+	<!-- 3===通过模糊查询，模糊查询条件可以为空。来得到总记录数 -->
+	<select id="getRowCount" resultType="int">
+		select count(*) from sys_logs
+		<include refid="query_where_username" />
+	</select>
+
+	<!-- 4===通过模糊查询、然后进行将查询出来的数据分页返回 -->
+	<select id="findPageObjects"
+		resultType="com.turtle.entity.SysLog">
+		select * from sys_logs
+		<include refid="query_where_username" />
+		order by createdTime asc
+		limit #{startIndex}, #{pageSize}
+	</select>
+
+	<!-- 4===往日志表中插入日志信息 -->
+	<insert id="insertObject">
+		insert into sys_logs
+		(username,operation,method,params,time,ip,createdTime)
+		values
+		(#{username}, #{operation}, #{method}, #{params}, #{time}, #{ip}, #{createdTime})
+	</insert>
+
+
 </mapper>

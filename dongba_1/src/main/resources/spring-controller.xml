@@ -25,17 +25,18 @@
        http://www.springframework.org/schema/context
       http://www.springframework.org/schema/context/spring-context-4.3.xsd">
 
-	<context:component-scan
-		base-package="com.turtle.controller" />
-		
+
 	<!--启用mvc默认配置(内置一部分bean对象的定义) -->
 	<mvc:annotation-driven />
-	
+
 	<!--注册视图解析对象 -->
 	<bean id="viewResolver"
 		class="org.springframework.web.servlet.view.InternalResourceViewResolver">
 		<property name="Prefix" value="/WEB-INF/pages/" />
 		<property name="Suffix" value=".html" />
 	</bean>
-
+	<context:component-scan
+		base-package="com.turtle.controller" />
+	<context:component-scan
+		base-package="com.turtle.common.controller" />
 </beans>
