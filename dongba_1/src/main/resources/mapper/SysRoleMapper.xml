@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.turtle.dao.SysRoleDao">
+
+	<!-- 这个是对通过角色名字进行模糊查询的提取语句 -->
+	<sql id="queryWhereId">
+		<where>
+			<if test="name != null and name != ''">
+				name like concat("%",#{name},"%")
+			</if>
+		</where>
+	</sql>
+
+	<!-- 查询是否有记录数 -->
+	<select id="getRowCount" resultType="int">
+		select count(*) from sys_roles
+		<include refid="queryWhereId" />
+	</select>
+
+	<!-- 查询记录进行返回 -->
+	<select id="findPageObjects"
+		resultType="com.turtle.entity.SysRole">
+		select * from sys_roles
+		<include refid="queryWhereId" />
+		order by createdTime desc
+		limit #{startIndex}, #{pageSize}
+	</select>
+
+	<!-- 通过角色id，查询出角色的信息，其中菜单id这里是调用了菜单的映射文件来完成赋值的 -->
+	<resultMap type="com.turtle.vo.SysRoleMenuVo"
+		id="sysRoleMenuVo">
+		<collection property="menuIds" column="id"
+			select="com.turtle.dao.SysRoleMenuDao.findMenuIdsByRoleId">
+		</collection>
+	</resultMap>
+	<select id="findObjectById" resultMap="sysRoleMenuVo">
+		select id,name,note from
+		sys_roles
+		where id=#{id}
+	</select>
+
+	<!-- 删除角色信息，通过角色id -->
+	<delete id="deleteObject">
+		delete from sys_roles
+		where id = #{id}
+	</delete>
+
+	<!-- 插入角色信息,这里使用了数据库中的方法，自增指定的字段 -->
+	<insert id="insertObject" useGeneratedKeys="true"
+		keyProperty="id">
+		insert into sys_roles
+		(id,name,note,createdTime,modifiedTime,createdUser,modifiedUser)
+		values
+		(null,#{name},#{note},now(),now(),#{createdUser},#{modifiedUser})
+	</insert>
+
+	<!-- 更新角色信息表中的数据记录 -->
+	<update id="updateObject">
+		update sys_roles
+		<set>
+			<if test="name!=null and name!=''">
+				name=#{name},
+			</if>
+			<if test="note!=null and note!=''">
+				note=#{note},
+			</if>
+			<if test="modifiedUser!=null and modifiedUser!=''">
+				modifiedUser=#{modifiedUser},
+			</if>
+				modifiedTime=now()
+		</set>
+		where id=#{id}
+	</update>
+
+</mapper>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
