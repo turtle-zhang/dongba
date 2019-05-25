@@ -41,11 +41,97 @@
 		<include refid="queryWhereId" />
 	</select>
 
+	<!-- 通过用户id来查询对应的信息 -->
+	<select id="findObjectById" resultMap="sysUserDeptVo">
+		select * from sys_users
+		where id=#{id}
+	</select>
+
+	<!-- 通过用户名来查询得到用户信息 -->
+	<select id="findUserByUserName"
+		resultType="com.turtle.entity.SysUser">
+		select * from sys_users
+		where username=#{username}
+	</select>
+
+
 	<!-- 对用户表中的用户权限进行更新 -->
 	<update id="validById">
 		update sys_users
-		set valid=#{valid},modifiedUser=#{modifiedUser},modifiedTime=now()
+		set
+		valid=#{valid},modifiedUser=#{modifiedUser},modifiedTime=now()
+		where
+		id=#{id}
+	</update>
+
+	<!-- 对用户表中的所有信息进行更新操作 -->
+	<update id="updateObject">
+		update sys_users
+		<set>
+			<if test="username!=null and username!=''">
+				username=#{username},
+			</if>
+			<if test="email!=null and email!=''">
+				email=#{email},
+			</if>
+			<if test="mobile!=null and mobile!=''">
+				mobile=#{mobile},
+			</if>
+			<if test="deptId!=null and deptId!=''">
+				deptId=#{deptId},
+			</if>
+
+			<if test="modifiedUser!=null and modifiedUser!=''">
+				modifiedUser=#{modifiedUser},
+			</if>
+			modifiedTime=now()
+		</set>
 		where id=#{id}
 	</update>
-	
+
+	<!-- 将用户信息保存到数据库中 -->
+	<insert id="insertObject" useGeneratedKeys="true"
+		keyProperty="id">
+		insert into sys_users
+		(username,password,deptId,email,mobile,salt,valid,createdTime,modifiedTime,createdUser,modifiedUser)
+		values
+		(#{username},#{password},#{deptId},#{email},#{mobile},#{salt},#{valid},now(),now(),#{createdUser},#{modifiedUser})
+	</insert>
+
+
+	<!-- 更新用户的密码 -->
+	<update id="updatePassword">
+		update sys_users
+		set
+		password=#{password},salt=#{salt},modifiedTime=now()
+		where id=#{id}
+	</update>
+
 </mapper>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

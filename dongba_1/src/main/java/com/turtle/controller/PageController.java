@@ -29,4 +29,14 @@ public class PageController {
 	public String doPageUI() {
 		return "common/page";
 	}
+	
+	/**
+	 * 返回的是登录界面
+	 * @return
+	 */
+	@RequestMapping("doLoginUI")
+	public String doLoginUI(){
+		return "login";
+	}
+
 }

@@ -1,6 +1,10 @@
 package com.turtle.service;
 
+import java.util.List;
+
 import com.turtle.entity.SysRole;
+import com.turtle.entity.SysUser;
+import com.turtle.vo.CheckBox;
 import com.turtle.vo.PageObject;
 import com.turtle.vo.SysRoleMenuVo;
 
@@ -48,4 +52,31 @@ public interface SysRoleService {
 	 * @return
 	 */
 	int updateObject(SysRole entity,Integer[] menuIds);
+	
+	/**
+	 * 返回所有的角色id--角色名字数据
+	 * @return
+	 */
+	List<CheckBox> findObjects();
+	
+
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

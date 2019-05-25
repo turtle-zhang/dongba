@@ -1,5 +1,8 @@
 package com.turtle.service;
 
+import java.util.Map;
+
+import com.turtle.entity.SysUser;
 import com.turtle.vo.PageObject;
 import com.turtle.vo.SysUserDeptVo;
 
@@ -26,5 +29,37 @@ public interface SysUserService {
 	 * @return
 	 */
 	int validById(Integer id, Integer valid, String modifiedUser);
+
+	/**
+	 * 保存用户信息
+	 * @param entity
+	 * @param roleIds
+	 * @return
+	 */
+	int saveObject(SysUser entity, Integer[] roleIds);
+	
+	/**
+	 * 将要显示在编辑界面的数据返回出来
+	 * @param userId
+	 * @return
+	 */
+	Map<String, Object> findObjectById(Integer userId);
+	
+	/**
+	 * 对用户信息进行更新操作
+	 * @param entity
+	 * @param roleIds
+	 * @return
+	 */
+	int updateObject(SysUser entity,Integer[] roleIds);
+	
+	/**
+	 * 更新用户的密码的操作
+	 * @param password
+	 * @param newPassword
+	 * @param cfgPassword
+	 * @return
+	 */
+	int updatePassword(String password,String newPassword,String cfgPassword);
 
 }

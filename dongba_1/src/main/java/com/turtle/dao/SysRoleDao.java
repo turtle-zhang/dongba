@@ -5,6 +5,7 @@ import java.util.List;
 import org.apache.ibatis.annotations.Param;
 
 import com.turtle.entity.SysRole;
+import com.turtle.vo.CheckBox;
 import com.turtle.vo.SysRoleMenuVo;
 
 /**
@@ -56,6 +57,12 @@ public interface SysRoleDao {
 	 * @return
 	 */
 	int updateObject(SysRole sysRole);
+	
+	/**
+	 * 查询角色表中的所有id--角色名数据
+	 * @return
+	 */
+	List<CheckBox> findObjects();
 }
 
 

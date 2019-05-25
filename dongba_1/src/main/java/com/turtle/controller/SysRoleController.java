@@ -88,22 +88,30 @@ public class SysRoleController {
 	public JsonResult doFindObjectById(Integer id) {
 		return new JsonResult(sysRoleService.findObjectById(id));
 	}
-
+	
+	/**
+	 * 更新角色数据
+	 * @param sysRole
+	 * @param menuIds
+	 * @return
+	 */
 	@RequestMapping("doUpdateObject")
 	@ResponseBody
 	public JsonResult doUpdateObject(SysRole sysRole, Integer[]menuIds) {
 		sysRoleService.updateObject(sysRole, menuIds);
 		return new JsonResult("更新成功");
 	}
+	
+	/**
+	 * 返回出角色表中对应的数据
+	 * @return
+	 */
+	@RequestMapping("doFindRoles")
+	@ResponseBody
+	public JsonResult doFindRoles() {
+		return new JsonResult(sysRoleService.findObjects());
+	}
 }
-
-
-
-
-
-
-
-
 
 
 

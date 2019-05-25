@@ -11,7 +11,9 @@ import com.turtle.dao.SysRoleDao;
 import com.turtle.dao.SysRoleMenuDao;
 import com.turtle.dao.SysUserRoleDao;
 import com.turtle.entity.SysRole;
+import com.turtle.entity.SysUser;
 import com.turtle.service.SysRoleService;
+import com.turtle.vo.CheckBox;
 import com.turtle.vo.PageObject;
 import com.turtle.vo.SysRoleMenuVo;
 
@@ -112,8 +114,12 @@ public class SysRoleServiceImpl implements SysRoleService {
 
 		return rows;
 	}
-	
-	
+
+	@Override
+	public List<CheckBox> findObjects() {
+		
+		return sysRoleDao.findObjects();
+	}
 
 }
 

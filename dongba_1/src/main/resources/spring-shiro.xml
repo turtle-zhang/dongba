@@ -25,7 +25,27 @@
        http://www.springframework.org/schema/context
       http://www.springframework.org/schema/context/spring-context-4.3.xsd">
 
-	<context:component-scan base-package="com.turtle.service"/>
-	<import resource="classpath:spring-shiro.xml"/>
-	
+	<bean id="securityManager"
+		class="org.apache.shiro.web.mgt.DefaultWebSecurityManager">
+	</bean>
+
+	<bean id="shiroFilterFactory"
+		class="org.apache.shiro.spring.web.ShiroFilterFactoryBean">
+		<property name="SecurityManager" ref="securityManager" />
+		<!-- 设置请求过滤规则 -->
+		<property name="LoginUrl" value="/doLoginUI.do"></property>
+		
+		<property name="FilterChainDefinitionMap">
+			<map>
+				<entry key="/bower_components/**" value="anon" />
+				<entry key="/build/**" value="anon" />
+				<entry key="/dist/**" value="anon" />
+				<entry key="/plugins/**" value="anon" />
+				<entry key="/**" value="authc" /><!-- 必须认证 -->
+			</map>
+		</property>
+		
+	</bean>
+
+
 </beans>

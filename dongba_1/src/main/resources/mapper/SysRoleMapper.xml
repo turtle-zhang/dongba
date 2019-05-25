@@ -40,6 +40,11 @@
 		where id=#{id}
 	</select>
 
+	<!-- 查询角色表中的id，名字，用户编辑界面的显示要使用 -->
+	<select id="findObjects" resultType="com.turtle.vo.CheckBox">
+		select id,name from sys_roles
+	</select>
+
 	<!-- 删除角色信息，通过角色id -->
 	<delete id="deleteObject">
 		delete from sys_roles
